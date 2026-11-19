@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-19
+
+### Added
+
 - First edition of the ITK Dev Tech Radar: 15 blips across four quadrants, each
   with its reasoning, placement history and usage figures from our public
   GitHub repositories.
