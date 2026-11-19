@@ -1,0 +1,52 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Legend from '../components/Legend.astro';
+import QuadrantList from '../components/QuadrantList.astro';
+import Radar from '../components/Radar.astro';
+import { currentEdition, quadrants, type Quadrant } from '../data/radar';
+import Layout from '../layouts/Layout.astro';
+import { getCurrentBlips } from '../lib/blips';
+import { placeBlips } from '../lib/radar-layout';
+
+export const getStaticPaths = (() =>
+  quadrants.map((quadrant) => ({ params: { quadrant: quadrant.id }, props: { quadrant } }))) satisfies GetStaticPaths;
+
+interface Props {
+  quadrant: Quadrant;
+}
+
+const { quadrant } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const blips = (await getCurrentBlips()).filter((b) => b.quadrant === quadrant.id);
+const placed = placeBlips(blips);
+---
+
+<Layout title={quadrant.name} description={quadrant.description} section="radar">
+  <div class="page-head">
+    <div class="wrap">
+      <nav class="itkaarhus-breadcrumb" aria-label="Breadcrumb">
+        <a href={base}>Radar</a>
+        <span class="sep" aria-hidden="true">
+          /
+        </span>
+        <span class="cur" aria-current="page">
+          {quadrant.name}
+        </span>
+      </nav>
+      <p class="eyebrow">Quadrant · Edition {currentEdition.id}</p>
+      <h1 class="page-head__title">{quadrant.name}</h1>
+      <p class="page-head__lede">{quadrant.description}</p>
+    </div>
+  </div>
+
+  <div class="wrap radar-layout radar-layout--quadrant">
+    <div class="radar-layout__chart">
+      <Radar blips={placed} focus={quadrant.id} />
+      <p class="visually-hidden">The radar chart is visual only. The same blips are listed next to it.</p>
+      <Legend />
+    </div>
+    <div class="radar-layout__aside">
+      <QuadrantList quadrant={quadrant.id} blips={blips} detailed showTitle={false} />
+    </div>
+  </div>
+</Layout>

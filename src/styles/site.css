@@ -1,0 +1,907 @@
+/* =============================================================
+   ITK Dev Tech Radar — site styles. Loads after the design system's
+   tokens.css and components.css; the header, footer and page head
+   follow the design system's website examples.
+
+   Colours come from the design system's semantic tokens (surfaces,
+   text, borders, roles), so every rule works in both the light and
+   the dark theme. Raw scale steps are only used on the footer, whose
+   inverse surface is dark in both themes.
+   ============================================================= */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+main {
+  flex: 1;
+}
+img {
+  max-width: 100%;
+}
+h1,
+h2,
+h3,
+h4 {
+  color: var(--itkaarhus-text);
+}
+:focus-visible {
+  outline: none;
+  box-shadow: var(--itkaarhus-focus);
+  border-radius: var(--itkaarhus-radius-1);
+}
+
+.wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 var(--itkaarhus-space-6);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  left: var(--itkaarhus-space-2);
+  top: -48px;
+  z-index: 30;
+  background: var(--itkaarhus-primary);
+  color: var(--itkaarhus-text-on-accent);
+  padding: var(--itkaarhus-space-2) var(--itkaarhus-space-3);
+  border-radius: var(--itkaarhus-radius-2);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s;
+}
+.skip:focus {
+  top: var(--itkaarhus-space-2);
+  color: var(--itkaarhus-text-on-accent);
+}
+
+.icon {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}
+
+.eyebrow {
+  font-size: var(--itkaarhus-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--itkaarhus-primary);
+  margin: 0 0 var(--itkaarhus-space-2);
+}
+
+/* ---- Header ------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--itkaarhus-bg);
+  border-bottom: 1px solid var(--itkaarhus-border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--itkaarhus-space-6);
+  height: 64px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--itkaarhus-text);
+}
+.brand:hover {
+  color: var(--itkaarhus-text);
+}
+.brand__emblem {
+  height: 28px;
+  width: auto;
+}
+.brand__name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.site-nav {
+  display: flex;
+  gap: var(--itkaarhus-space-5);
+}
+.site-nav a {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--itkaarhus-text-muted);
+  text-decoration: none;
+  padding: var(--itkaarhus-space-1) 0;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover {
+  color: var(--itkaarhus-text);
+}
+.site-nav a[aria-current='page'] {
+  color: var(--itkaarhus-primary);
+  border-bottom-color: var(--itkaarhus-primary);
+}
+.site-header__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--itkaarhus-space-3);
+}
+
+/* ---- Page head --------------------------------------------- */
+.page-head {
+  background: var(--itkaarhus-bg-muted);
+  border-bottom: 1px solid var(--itkaarhus-border);
+  padding: var(--itkaarhus-space-7) 0 var(--itkaarhus-space-6);
+}
+.page-head .itkaarhus-breadcrumb {
+  margin-bottom: var(--itkaarhus-space-4);
+}
+.page-head__title {
+  font-size: var(--itkaarhus-text-2xl);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin: 0;
+}
+.page-head__lede {
+  font-size: var(--itkaarhus-text-md);
+  color: var(--itkaarhus-text-muted);
+  max-width: 62ch;
+  margin: var(--itkaarhus-space-3) 0 0;
+}
+
+/* ---- Sections ---------------------------------------------- */
+.section {
+  padding: var(--itkaarhus-space-7) 0;
+}
+.section--alt {
+  background: var(--itkaarhus-bg-muted);
+  border-top: 1px solid var(--itkaarhus-border);
+}
+.section__title {
+  font-size: var(--itkaarhus-text-xl);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--itkaarhus-space-5);
+}
+
+.aside-heading {
+  font-size: var(--itkaarhus-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--itkaarhus-text-subtle);
+  margin: 0 0 var(--itkaarhus-space-3);
+  padding: 0;
+}
+.aside-text {
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-muted);
+  margin: 0;
+}
+.aside-note {
+  font-size: var(--itkaarhus-text-xs);
+  color: var(--itkaarhus-text-subtle);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---- Radar layout ------------------------------------------ */
+.radar-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--itkaarhus-space-7);
+  padding-top: var(--itkaarhus-space-6);
+  padding-bottom: var(--itkaarhus-space-7);
+  align-items: start;
+}
+.radar-layout--quadrant {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.radar-layout__chart {
+  display: grid;
+  gap: var(--itkaarhus-space-4);
+  justify-items: center;
+}
+.radar-layout__aside {
+  display: grid;
+  gap: var(--itkaarhus-space-6);
+}
+
+/* ---- Radar chart ------------------------------------------- */
+/* Ring bands tint the page surface with the primary colour, strongest at
+   the centre. Mixing (rather than fixed scale steps) keeps the steps
+   distinct on both the light and the dark surface; in light, 20 % and
+   10 % reproduce blue-100 and blue-50. */
+.radar {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+}
+.radar__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--itkaarhus-font-sans);
+}
+.radar__ring {
+  stroke: var(--itkaarhus-border-strong);
+  stroke-width: 1;
+}
+.radar__ring--adopt {
+  fill: color-mix(in srgb, var(--itkaarhus-primary) 20%, var(--itkaarhus-bg));
+}
+.radar__ring--trial {
+  fill: color-mix(in srgb, var(--itkaarhus-primary) 10%, var(--itkaarhus-bg));
+}
+.radar__ring--assess {
+  fill: var(--itkaarhus-bg-muted);
+}
+.radar__ring--hold {
+  fill: var(--itkaarhus-bg);
+}
+.radar__axis {
+  stroke: var(--itkaarhus-border-strong);
+  stroke-width: 1;
+}
+.radar__ring-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--itkaarhus-text-subtle);
+  paint-order: stroke;
+  stroke: var(--itkaarhus-bg);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+.radar__svg a {
+  text-decoration: none;
+}
+.radar__quadrant-label {
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--itkaarhus-text);
+}
+.radar__quadrant-link:hover .radar__quadrant-label {
+  fill: var(--itkaarhus-primary);
+  text-decoration: underline;
+}
+.radar__blip {
+  cursor: pointer;
+  transition: opacity 0.15s ease-out;
+}
+.radar__shape {
+  fill: var(--itkaarhus-primary);
+  transition: fill 0.15s ease-out;
+}
+.radar__blip--hold .radar__shape {
+  fill: var(--itkaarhus-text-subtle);
+}
+.radar__halo {
+  fill: none;
+  stroke: var(--itkaarhus-primary);
+  stroke-width: 1.5;
+}
+.radar__number {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--itkaarhus-text-on-accent);
+  text-anchor: middle;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+.radar__blip:hover .radar__shape,
+.radar__blip.is-active .radar__shape {
+  fill: var(--itkaarhus-secondary-hover);
+}
+.radar__blip.is-dimmed {
+  opacity: 0.18;
+}
+.radar__tooltip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 8px));
+  pointer-events: none;
+  white-space: nowrap;
+  background: var(--itkaarhus-bg-inverse);
+  color: var(--itkaarhus-text-on-inverse);
+  font-size: var(--itkaarhus-text-sm);
+  font-weight: 500;
+  padding: var(--itkaarhus-space-1) var(--itkaarhus-space-2);
+  border-radius: var(--itkaarhus-radius-2);
+  border: 1px solid var(--itkaarhus-border);
+}
+.radar__tooltip[hidden] {
+  display: none;
+}
+
+/* ---- Segmented radio group (ring filter, theme toggle) ----- */
+.segmented {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.segmented__options {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--itkaarhus-border-strong);
+  border-radius: var(--itkaarhus-radius-2);
+  overflow: hidden;
+  width: max-content;
+  max-width: 100%;
+}
+.segmented__option {
+  position: relative;
+}
+.segmented__option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.segmented__option > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--itkaarhus-space-2) var(--itkaarhus-space-3);
+  font-size: var(--itkaarhus-text-sm);
+  font-weight: 500;
+  color: var(--itkaarhus-text-muted);
+  background: var(--itkaarhus-bg-raised);
+  cursor: pointer;
+  border-left: 1px solid var(--itkaarhus-border-strong);
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.segmented__option:first-child > span {
+  border-left: 0;
+}
+.segmented__option > span:hover {
+  background: var(--itkaarhus-bg-muted);
+  color: var(--itkaarhus-text);
+}
+.segmented__option input:checked + span {
+  background: var(--itkaarhus-primary);
+  color: var(--itkaarhus-text-on-accent);
+}
+.segmented__option input:focus-visible + span {
+  outline: 2px solid var(--itkaarhus-primary);
+  outline-offset: -4px;
+}
+.segmented__option input:checked:focus-visible + span {
+  outline-color: var(--itkaarhus-text-on-accent);
+}
+.segmented--sm .segmented__option > span {
+  padding: 6px var(--itkaarhus-space-2);
+  font-size: var(--itkaarhus-text-xs);
+}
+
+/* ---- Ring definitions & legend ----------------------------- */
+.ring-definitions {
+  display: grid;
+  gap: var(--itkaarhus-space-3);
+  margin: 0;
+}
+.ring-definitions dt {
+  font-size: var(--itkaarhus-text-sm);
+  font-weight: 600;
+}
+.ring-definitions dd {
+  margin: 2px 0 0;
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-muted);
+}
+
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--itkaarhus-space-2);
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-muted);
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--itkaarhus-space-2);
+}
+.legend__mark {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.legend__fill {
+  fill: var(--itkaarhus-primary);
+}
+.legend__fill--hold {
+  fill: var(--itkaarhus-text-subtle);
+}
+.legend__halo {
+  fill: none;
+  stroke: var(--itkaarhus-primary);
+  stroke-width: 1.5;
+}
+
+/* ---- Blip number badge ------------------------------------- */
+.blip-number {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--itkaarhus-primary);
+  color: var(--itkaarhus-text-on-accent);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.blip-number--hold {
+  background: var(--itkaarhus-text-subtle);
+}
+
+/* ---- Quadrant lists ---------------------------------------- */
+.quadrant-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--itkaarhus-space-5);
+}
+.quadrant-list {
+  display: grid;
+  gap: var(--itkaarhus-space-4);
+  align-content: start;
+}
+.quadrant-grid .quadrant-list {
+  background: var(--itkaarhus-bg-raised);
+  border: 1px solid var(--itkaarhus-border);
+  border-radius: var(--itkaarhus-radius-2);
+  padding: var(--itkaarhus-space-5);
+}
+.quadrant-list__title {
+  font-size: var(--itkaarhus-text-md);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.quadrant-list__title a {
+  color: inherit;
+  text-decoration: none;
+}
+.quadrant-list__title a:hover {
+  color: var(--itkaarhus-primary);
+  text-decoration: underline;
+}
+.quadrant-list__ring {
+  font-size: var(--itkaarhus-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--itkaarhus-text-subtle);
+  margin: 0 0 var(--itkaarhus-space-2);
+}
+.quadrant-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+.quadrant-list__empty {
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-subtle);
+  margin: 0;
+}
+.quadrant-list [hidden] {
+  display: none;
+}
+
+/* The link is the row: it bleeds into the list's padding so the highlight
+   frames the badge, and the same highlight marks hover, focus and a blip
+   hovered on the radar (.is-active on the item). */
+.blip-item__link {
+  display: flex;
+  align-items: center;
+  gap: var(--itkaarhus-space-2);
+  padding: 6px var(--itkaarhus-space-2);
+  margin: 0 calc(-1 * var(--itkaarhus-space-2));
+  color: var(--itkaarhus-text);
+  text-decoration: none;
+  border-radius: var(--itkaarhus-radius-2);
+  transition:
+    background 0.15s ease-out,
+    color 0.15s ease-out;
+}
+.blip-item__link:hover,
+.blip-item.is-active .blip-item__link {
+  background: var(--itkaarhus-primary-soft);
+  color: var(--itkaarhus-primary-soft-text);
+}
+.blip-item__title {
+  font-size: 15px;
+  font-weight: 500;
+}
+.blip-item__summary {
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-muted);
+  margin: 0 0 var(--itkaarhus-space-2) 32px;
+}
+.quadrant-list--detailed .quadrant-list__items {
+  gap: var(--itkaarhus-space-1);
+}
+
+/* ---- Blip page --------------------------------------------- */
+.blip-head {
+  display: flex;
+  align-items: center;
+  gap: var(--itkaarhus-space-3);
+}
+.blip-head .blip-number {
+  width: 32px;
+  height: 32px;
+  font-size: var(--itkaarhus-text-sm);
+}
+.blip-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--itkaarhus-space-2);
+  margin-top: var(--itkaarhus-space-3);
+}
+.blip-head__quadrant {
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-subtle);
+  margin-left: var(--itkaarhus-space-1);
+}
+
+.blip-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--itkaarhus-space-8);
+  padding-top: var(--itkaarhus-space-6);
+  padding-bottom: var(--itkaarhus-space-8);
+  align-items: start;
+}
+.blip-aside {
+  display: grid;
+  gap: var(--itkaarhus-space-5);
+}
+.aside-block {
+  display: grid;
+  gap: var(--itkaarhus-space-2);
+  padding-bottom: var(--itkaarhus-space-5);
+  border-bottom: 1px solid var(--itkaarhus-border);
+}
+.aside-block:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.aside-block .aside-heading {
+  margin-bottom: 0;
+}
+
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--itkaarhus-space-3);
+}
+.history__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--itkaarhus-space-2);
+}
+.history__edition {
+  font-size: var(--itkaarhus-text-sm);
+  font-weight: 600;
+}
+.history__note {
+  font-size: var(--itkaarhus-text-sm);
+  color: var(--itkaarhus-text-muted);
+  margin: var(--itkaarhus-space-1) 0 0;
+}
+
+.usage {
+  display: flex;
+  align-items: baseline;
+  gap: var(--itkaarhus-space-2);
+  margin: 0;
+}
+.usage__count {
+  font-size: var(--itkaarhus-text-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--itkaarhus-text);
+  font-variant-numeric: tabular-nums;
+}
+.usage__details summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: var(--itkaarhus-text-sm);
+  font-weight: 600;
+  color: var(--itkaarhus-primary);
+  list-style: none;
+}
+.usage__details summary::-webkit-details-marker {
+  display: none;
+}
+.usage__details summary .icon {
+  transition: transform 0.15s ease-out;
+}
+.usage__details[open] summary .icon {
+  transform: rotate(180deg);
+}
+.usage__repos {
+  list-style: none;
+  margin: var(--itkaarhus-space-2) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+  font-size: var(--itkaarhus-text-sm);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.link-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--itkaarhus-space-1);
+  font-size: var(--itkaarhus-text-sm);
+}
+.tag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--itkaarhus-space-1);
+}
+
+/* ---- Prose ------------------------------------------------- */
+.prose {
+  max-width: 68ch;
+  font-size: var(--itkaarhus-text-base);
+  color: var(--itkaarhus-text);
+}
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose h2 {
+  font-size: var(--itkaarhus-text-lg);
+  letter-spacing: -0.01em;
+  margin: var(--itkaarhus-space-6) 0 var(--itkaarhus-space-2);
+}
+.prose p,
+.prose ul,
+.prose dl {
+  margin: 0 0 var(--itkaarhus-space-4);
+}
+.prose ul {
+  padding-left: var(--itkaarhus-space-5);
+}
+.prose li + li {
+  margin-top: var(--itkaarhus-space-1);
+}
+.prose code {
+  font-family: var(--itkaarhus-font-mono);
+  font-size: 0.9em;
+  background: var(--itkaarhus-neutral-soft);
+  color: var(--itkaarhus-neutral-soft-text);
+  padding: 1px 5px;
+  border-radius: var(--itkaarhus-radius-1);
+}
+.prose .legend {
+  margin-bottom: var(--itkaarhus-space-4);
+}
+.prose-page {
+  padding-top: var(--itkaarhus-space-6);
+  padding-bottom: var(--itkaarhus-space-8);
+}
+.definition-list {
+  display: grid;
+  gap: var(--itkaarhus-space-3);
+}
+.definition-list dt {
+  font-weight: 600;
+}
+.definition-list dd {
+  margin: 2px 0 0;
+  color: var(--itkaarhus-text-muted);
+}
+
+/* ---- Footer ------------------------------------------------ */
+/* The inverse surface is dark in both themes, so the footer's light text
+   and blue-200 headings hold in both. */
+.site-footer {
+  background: var(--itkaarhus-bg-inverse);
+  color: rgba(255, 255, 255, 0.8);
+  padding: var(--itkaarhus-space-8) 0 var(--itkaarhus-space-5);
+}
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: var(--itkaarhus-space-7);
+}
+.site-footer__name {
+  color: var(--itkaarhus-text-on-inverse);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--itkaarhus-space-3);
+}
+.site-footer__about {
+  font-size: var(--itkaarhus-text-sm);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 36ch;
+  margin: 0;
+}
+.site-footer__heading {
+  font-size: var(--itkaarhus-text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--itkaarhus-blue-200);
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.site-footer a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: var(--itkaarhus-text-sm);
+}
+.site-footer a:hover {
+  color: var(--itkaarhus-text-on-inverse);
+  text-decoration: underline;
+}
+.endorse {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--itkaarhus-space-2);
+  margin-top: 22px;
+}
+.endorse__label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+.endorse img {
+  height: 34px;
+  width: auto;
+}
+.site-footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--itkaarhus-space-4);
+  margin-top: var(--itkaarhus-space-7);
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.site-footer__bottom a {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+}
+
+/* ---- Responsive -------------------------------------------- */
+@media (max-width: 1199.98px) {
+  .quadrant-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1023.98px) {
+  .radar-layout,
+  .radar-layout--quadrant,
+  .blip-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--itkaarhus-space-6);
+  }
+  .blip-layout {
+    padding-bottom: var(--itkaarhus-space-7);
+  }
+}
+@media (max-width: 767.98px) {
+  /* The full radar is illegible at phone width; the list carries the content
+     and each quadrant page shows a readable zoomed chart. */
+  .desktop-only {
+    display: none;
+  }
+  .radar-layout {
+    padding-top: var(--itkaarhus-space-5);
+    padding-bottom: var(--itkaarhus-space-5);
+  }
+  .wrap {
+    padding: 0 var(--itkaarhus-space-4);
+  }
+  .page-head {
+    padding: var(--itkaarhus-space-6) 0 var(--itkaarhus-space-5);
+  }
+  .page-head__title {
+    font-size: var(--itkaarhus-text-xl);
+  }
+  .page-head__lede {
+    font-size: var(--itkaarhus-text-base);
+  }
+  /* Brand, nav and the icon-only theme switch share one row at 360px+:
+     the brand drops "ITK Dev" (the emblem and page title carry it). */
+  .site-header__inner {
+    gap: var(--itkaarhus-space-3);
+  }
+  .site-nav {
+    gap: var(--itkaarhus-space-3);
+  }
+  .brand__owner {
+    display: none;
+  }
+  .site-header__edition {
+    display: none;
+  }
+  /* Icon-only theme switch; each option keeps its text for assistive tech. */
+  .theme-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .quadrant-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quadrant-grid .quadrant-list {
+    padding: var(--itkaarhus-space-4);
+  }
+  .site-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--itkaarhus-space-6);
+  }
+  .site-footer__grid > :first-child {
+    grid-column: 1 / -1;
+  }
+  .section {
+    padding: var(--itkaarhus-space-6) 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

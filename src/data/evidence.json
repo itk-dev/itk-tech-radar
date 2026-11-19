@@ -1,0 +1,649 @@
+{
+  "org": "itk-dev",
+  "generatedAt": "2026-11-19",
+  "since": "2025-05-19",
+  "repositoryCount": 103,
+  "blips": {
+    "agent-context-files": {
+      "rule": {
+        "description": "Has CLAUDE.md or AGENTS.md",
+        "files": [
+          "CLAUDE.md",
+          "AGENTS.md"
+        ]
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "aibibliotek",
+        "biped-mocks",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "itkaarhus-design-system",
+        "itkdev-design-system",
+        "itkdev-skills",
+        "itkdev_signing_server",
+        "koerselsoverblik",
+        "mcp-claude-code-browser-feedback",
+        "mcp-dawa",
+        "paperclip-docker",
+        "research-projects",
+        "tidy-feedback"
+      ]
+    },
+    "astro": {
+      "rule": {
+        "description": "Depends on astro",
+        "npm": [
+          "astro"
+        ]
+      },
+      "repositories": [
+        "itkaarhus-design-system"
+      ]
+    },
+    "drupal": {
+      "rule": {
+        "description": "Requires Drupal core",
+        "composer": [
+          "drupal/core",
+          "drupal/core-recommended"
+        ]
+      },
+      "repositories": [
+        "ai-screening",
+        "deltag.aarhus.dk",
+        "doner-din-stemme",
+        "dpl_pretix",
+        "drupal-11-template",
+        "drupal_translation_extractor",
+        "filmfolk",
+        "foreningsmentor",
+        "project-database",
+        "selvbetjening.aarhuskommune.dk",
+        "test_8"
+      ]
+    },
+    "github-actions": {
+      "rule": {
+        "description": "Has GitHub Actions workflows",
+        "workflows": [
+          "."
+        ]
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "ai-screening",
+        "aibibliotek",
+        "azure-ad-delta-sync-drupal",
+        "beskedfordeler-drupal",
+        "biped-mocks",
+        "book_aarhus",
+        "cpr-validator",
+        "deltag.aarhus.dk",
+        "devops_itkdev-docker",
+        "devops_itksites",
+        "dokk1gh",
+        "doner-din-stemme",
+        "dpl_pretix",
+        "drupal-11-template",
+        "drupal_admin_message",
+        "drupal_psr6_cache",
+        "drupal_translation_extractor",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "event-database-services",
+        "f2-api-client",
+        "filmfolk",
+        "foreningsmentor",
+        "freescout-itk-issue-create",
+        "freescout-itk-leantime-sync",
+        "getorganized-api-client-php",
+        "gh-itkdev",
+        "helm-charts",
+        "hoeringsportal-getorganized",
+        "iot_alert_manager_docker",
+        "iotlab-broker",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itk_azure_video",
+        "itk_pretix",
+        "itk_video",
+        "itkaarhus-design-system",
+        "itkdev-claude-code-statusline",
+        "itkdev-claude-plugins",
+        "itkdev-design-system",
+        "itkdev-helper",
+        "itkdev-skills",
+        "itkdev_advancedqueue_addons",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "lejlighedsviser",
+        "mcp-claude-code-browser-feedback",
+        "mcp-dawa",
+        "musikcsv",
+        "naevnssekretariatet",
+        "openid-connect",
+        "openid-connect-bundle",
+        "os2forms_f2",
+        "os2forms_failed_jobs",
+        "os2forms_fordelingskomponent",
+        "os2forms_nemlogin_openid_connect",
+        "os2forms_organisation",
+        "os2forms_payment",
+        "os2forms_user_field_lookup",
+        "os2forms_webform_submission_log",
+        "purview",
+        "referenceregister",
+        "research-projects",
+        "rpa-process-overview",
+        "selvbetjening.aarhuskommune.dk",
+        "serviceplatformen",
+        "serviceplatformen_organisation_api",
+        "sysstatus",
+        "test_8",
+        "tidy-feedback",
+        "vault-bundle",
+        "vault-library",
+        "yesplan-asana"
+      ]
+    },
+    "itkdev-docker": {
+      "rule": {
+        "description": "docker-compose.yml uses itkdev images",
+        "contents": {
+          "docker-compose.yml": [
+            "image:\\s*itkdev/"
+          ]
+        }
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "ai-screening",
+        "aibibliotek",
+        "azure-ad-delta-sync-drupal",
+        "book_aarhus",
+        "cpr-validator",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "dokk1gh",
+        "doner-din-stemme",
+        "dpl_pretix",
+        "drupal_admin_message",
+        "drupal_translation_extractor",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "filmfolk",
+        "foreningsmentor",
+        "freescout-docker",
+        "hoeringsportal-getorganized",
+        "iot_alert_manager_docker",
+        "iotlab-broker",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itk_video",
+        "itkdev_advancedqueue_addons",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "mcp-server-docker",
+        "mediawiki-docker",
+        "musikcsv",
+        "naevnssekretariatet",
+        "openid-connect",
+        "openid-connect-bundle",
+        "os2forms_f2",
+        "os2forms_failed_jobs",
+        "os2forms_fordelingskomponent",
+        "os2forms_nemlogin_openid_connect",
+        "os2forms_organisation",
+        "os2forms_payment",
+        "os2forms_webform_submission_log",
+        "project-database",
+        "referenceregister",
+        "research-projects",
+        "rpa-process-overview",
+        "selvbetjening.aarhuskommune.dk",
+        "serviceplatformen_organisation_api",
+        "sysstatus",
+        "vault-bundle",
+        "vault-library",
+        "yesplan-asana"
+      ]
+    },
+    "keep-a-changelog": {
+      "rule": {
+        "description": "CHANGELOG.md follows Keep a Changelog",
+        "contents": {
+          "CHANGELOG.md": [
+            "keepachangelog\\.com"
+          ]
+        }
+      },
+      "repositories": [
+        "AzureKeyVaultPhp",
+        "aarhusai-overview",
+        "ai-screening",
+        "aibibliotek",
+        "azure-ad-delta-sync-drupal",
+        "beskedfordeler-drupal",
+        "biped-mocks",
+        "book_aarhus",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "dokk1gh",
+        "doner-din-stemme",
+        "dpl_pretix",
+        "drupal-11-template",
+        "drupal_admin_message",
+        "drupal_psr6_cache",
+        "drupal_translation_extractor",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "event-database-services",
+        "f2-api-client",
+        "filmfolk",
+        "foreningsmentor",
+        "freescout-itk-issue-create",
+        "freescout-itk-leantime-sync",
+        "getorganized-api-client-php",
+        "gh-itkdev",
+        "hoeringsportal-getorganized",
+        "iotlab-broker",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itk_dropzonejs_image_widget",
+        "itk_pretix",
+        "itk_video",
+        "itkaarhus-design-system",
+        "itkdev-claude-code-statusline",
+        "itkdev-claude-plugins",
+        "itkdev-design-system",
+        "itkdev-helper",
+        "itkdev-skills",
+        "itkdev_advancedqueue_addons",
+        "itkdev_base_theme",
+        "itkdev_signing_server",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "mcp-claude-code-browser-feedback",
+        "musikcsv",
+        "naevnssekretariatet",
+        "openid-connect",
+        "openid-connect-bundle",
+        "os2forms_f2",
+        "os2forms_fordelingskomponent",
+        "os2forms_nemlogin_openid_connect",
+        "os2forms_organisation",
+        "os2forms_payment",
+        "os2forms_user_field_lookup",
+        "os2forms_webform_submission_log",
+        "referenceregister",
+        "research-projects",
+        "rpa-process-overview",
+        "serviceplatformen",
+        "serviceplatformen_organisation_api",
+        "sysstatus",
+        "test_8",
+        "tidy-feedback",
+        "vault-bundle",
+        "vault-library",
+        "yesplan-asana"
+      ]
+    },
+    "mariadb": {
+      "rule": {
+        "description": "docker-compose.yml runs MariaDB",
+        "contents": {
+          "docker-compose.yml": [
+            "image:\\s*(itkdev/)?mariadb"
+          ]
+        }
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "ai-screening",
+        "aibibliotek",
+        "book_aarhus",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "dokk1gh",
+        "doner-din-stemme",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "filmfolk",
+        "foreningsmentor",
+        "freescout-docker",
+        "hoeringsportal-getorganized",
+        "iot_alert_manager_docker",
+        "itk-feedback-collector",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "mediawiki-docker",
+        "naevnssekretariatet",
+        "project-database",
+        "referenceregister",
+        "rpa-process-overview",
+        "selvbetjening.aarhuskommune.dk",
+        "serviceplatformen_organisation_api",
+        "sysstatus",
+        "yesplan-asana"
+      ]
+    },
+    "php": {
+      "rule": {
+        "description": "Runs on the itkdev PHP 8.4 image",
+        "contents": {
+          "docker-compose.yml": [
+            "itkdev/php8\\.4-fpm"
+          ]
+        }
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "ai-screening",
+        "aibibliotek",
+        "azure-ad-delta-sync-drupal",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "dokk1gh",
+        "dpl_pretix",
+        "drupal_admin_message",
+        "economics",
+        "entity-bundle",
+        "filmfolk",
+        "foreningsmentor",
+        "hoeringsportal-getorganized",
+        "iot_alert_manager_docker",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itk_video",
+        "itqr",
+        "kunstdatabasen",
+        "openid-connect",
+        "openid-connect-bundle",
+        "referenceregister",
+        "rpa-process-overview",
+        "selvbetjening.aarhuskommune.dk",
+        "sysstatus",
+        "yesplan-asana"
+      ]
+    },
+    "phpstan": {
+      "rule": {
+        "description": "Configures or requires PHPStan",
+        "composer": [
+          "phpstan/phpstan"
+        ],
+        "files": [
+          "phpstan.neon",
+          "phpstan.dist.neon",
+          "phpstan.neon.dist"
+        ]
+      },
+      "repositories": [
+        "ai-screening",
+        "aibibliotek",
+        "azure-ad-delta-sync-drupal",
+        "book_aarhus",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "dokk1gh",
+        "dpl_pretix",
+        "drupal-11-template",
+        "drupal_admin_message",
+        "drupal_psr6_cache",
+        "drupal_translation_extractor",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "f2-api-client",
+        "foreningsmentor",
+        "getorganized-api-client-php",
+        "hoeringsportal-getorganized",
+        "itk-projects",
+        "itk_azure_video",
+        "itk_pretix",
+        "itk_video",
+        "itkdev_advancedqueue_addons",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "naevnssekretariatet",
+        "openid-connect",
+        "openid-connect-bundle",
+        "os2forms_f2",
+        "os2forms_failed_jobs",
+        "os2forms_fordelingskomponent",
+        "os2forms_nemlogin_openid_connect",
+        "os2forms_organisation",
+        "os2forms_payment",
+        "os2forms_user_field_lookup",
+        "os2forms_webform_submission_log",
+        "referenceregister",
+        "selvbetjening.aarhuskommune.dk",
+        "serviceplatformen",
+        "sysstatus",
+        "test_8"
+      ]
+    },
+    "rector": {
+      "rule": {
+        "description": "Configures or requires Rector",
+        "composer": [
+          "rector/rector"
+        ],
+        "files": [
+          "rector.php"
+        ]
+      },
+      "repositories": [
+        "aibibliotek",
+        "azure-ad-delta-sync-drupal",
+        "book_aarhus",
+        "devops_itksites",
+        "dokk1gh",
+        "drupal_admin_message",
+        "drupal_translation_extractor",
+        "event-database-api",
+        "event-database-imports",
+        "f2-api-client",
+        "filmfolk",
+        "hoeringsportal-getorganized",
+        "itk_pretix",
+        "itkdev_advancedqueue_addons",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "openid-connect-bundle",
+        "os2forms_f2",
+        "os2forms_failed_jobs",
+        "os2forms_fordelingskomponent",
+        "os2forms_nemlogin_openid_connect",
+        "os2forms_organisation",
+        "os2forms_payment",
+        "os2forms_user_field_lookup",
+        "os2forms_webform_submission_log",
+        "referenceregister",
+        "sysstatus",
+        "tidy-feedback"
+      ]
+    },
+    "symfony-assetmapper": {
+      "rule": {
+        "description": "Requires symfony/asset-mapper",
+        "composer": [
+          "symfony/asset-mapper"
+        ]
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "aibibliotek",
+        "hoeringsportal-getorganized",
+        "itk-projects",
+        "koerselsoverblik",
+        "referenceregister",
+        "rpa-process-overview",
+        "sysstatus"
+      ]
+    },
+    "symfony": {
+      "rule": {
+        "description": "Requires symfony/framework-bundle",
+        "composer": [
+          "symfony/framework-bundle"
+        ]
+      },
+      "repositories": [
+        "aarhusai-overview",
+        "aibibliotek",
+        "book_aarhus",
+        "devops_itksites",
+        "dokk1gh",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "hoeringsportal-getorganized",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "naevnssekretariatet",
+        "openid-connect-bundle",
+        "referenceregister",
+        "rpa-process-overview",
+        "serviceplatformen_organisation_api",
+        "sysstatus",
+        "yesplan-asana"
+      ]
+    },
+    "taskfile": {
+      "rule": {
+        "description": "Has a Taskfile",
+        "files": [
+          "Taskfile.yml",
+          "Taskfile.yaml"
+        ]
+      },
+      "repositories": [
+        "ai-screening",
+        "aibibliotek",
+        "deltag.aarhus.dk",
+        "devops_itkdev-docker",
+        "devops_itksites",
+        "dokk1gh",
+        "dpl_pretix",
+        "drupal-11-template",
+        "drupal_translation_extractor",
+        "economics",
+        "entity-bundle",
+        "event-database-api",
+        "event-database-imports",
+        "f2-api-client",
+        "filmfolk",
+        "foreningsmentor",
+        "freescout-docker",
+        "gh-itkdev",
+        "hoeringsportal-getorganized",
+        "iot_alert_manager_docker",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itkdev-helper",
+        "itkdev_advancedqueue_addons",
+        "itkdev_signing_server",
+        "itqr",
+        "koerselsoverblik",
+        "kunstdatabasen",
+        "mcp-dawa",
+        "musikcsv",
+        "naevnssekretariatet",
+        "openid-connect",
+        "openid-connect-bundle",
+        "os2forms_f2",
+        "os2forms_failed_jobs",
+        "os2forms_fordelingskomponent",
+        "os2forms_nemlogin_openid_connect",
+        "os2forms_organisation",
+        "os2forms_payment",
+        "os2forms_user_field_lookup",
+        "os2forms_webform_submission_log",
+        "purview",
+        "referenceregister",
+        "research-projects",
+        "rpa-process-overview",
+        "selvbetjening.aarhuskommune.dk",
+        "serviceplatformen",
+        "sysstatus",
+        "test_8",
+        "tidy-feedback"
+      ]
+    },
+    "webpack-encore": {
+      "rule": {
+        "description": "Depends on Webpack Encore",
+        "npm": [
+          "@symfony/webpack-encore"
+        ],
+        "composer": [
+          "symfony/webpack-encore-bundle"
+        ]
+      },
+      "repositories": [
+        "dokk1gh",
+        "doner-din-stemme",
+        "economics",
+        "itk-feedback-collector",
+        "itk_pretix",
+        "itqr",
+        "kunstdatabasen",
+        "naevnssekretariatet",
+        "tidy-feedback"
+      ]
+    },
+    "woodpecker-ci": {
+      "rule": {
+        "description": "Has Woodpecker pipelines",
+        "files": [
+          ".woodpecker",
+          ".woodpecker.yml",
+          ".woodpecker.yaml"
+        ]
+      },
+      "repositories": [
+        "ai-screening",
+        "aibibliotek",
+        "deltag.aarhus.dk",
+        "devops_itksites",
+        "doner-din-stemme",
+        "economics",
+        "event-database-api",
+        "event-database-imports",
+        "event-database-services",
+        "filmfolk",
+        "foreningsmentor",
+        "iot_alert_manager_docker",
+        "itk-feedback-collector",
+        "itk-projects",
+        "itqr",
+        "kunstdatabasen",
+        "sysstatus"
+      ]
+    }
+  }
+}

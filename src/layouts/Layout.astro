@@ -1,0 +1,133 @@
+---
+import '../../vendor/itkaarhus-design-system/assets/tokens.css';
+import '../../vendor/itkaarhus-design-system/assets/components.css';
+import '../styles/site.css';
+import emblem from '../../vendor/itkaarhus-design-system/assets/logos/aak-emblem.svg?url';
+import emblemWhite from '../../vendor/itkaarhus-design-system/assets/logos/aak-emblem-hvid.svg?url';
+import endorsement from '../../vendor/itkaarhus-design-system/extra/AAK_02_venstrejusteret_hvid.svg?url';
+import favicon from '../../vendor/itkaarhus-design-system/extra/aak-favicon.ico?url';
+import { currentEdition, quadrants } from '../data/radar';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { site } from '../data/site';
+
+interface Props {
+  /** Page title, without the site suffix. Omit on the front page. */
+  title?: string;
+  description: string;
+  /** Top-level section to mark as current in the header. */
+  section?: 'radar' | 'about';
+}
+
+const { title, description, section } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const pageTitle = title ? `${title} · ${site.owner} ${site.name}` : `${site.owner} ${site.name}`;
+---
+
+<!doctype html>
+<html lang="en" data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Apply the stored theme before first paint, so the page never flashes
+      // the wrong theme. Without a stored choice it follows the OS ("auto").
+      // The key is the design system's, shared with its reference site.
+      try {
+        const stored = localStorage.getItem('itkaarhus-theme');
+        if (stored === 'light' || stored === 'dark' || stored === 'auto') {
+          document.documentElement.dataset.theme = stored;
+        }
+      } catch {}
+    </script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" href={favicon} sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">
+      Skip to content
+    </a>
+
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a class="brand" href={base}>
+          <img class="brand__emblem itkaarhus-light-only" src={emblem} alt="" width="22" height="32" />
+          <img class="brand__emblem itkaarhus-dark-only" src={emblemWhite} alt="" width="22" height="32" />
+          <span class="brand__name">
+            <span class="brand__owner">{site.owner} </span>
+            {site.name}
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <a href={base} aria-current={section === 'radar' ? 'page' : undefined}>
+            Radar
+          </a>
+          <a href={`${base}about/`} aria-current={section === 'about' ? 'page' : undefined}>
+            About
+          </a>
+        </nav>
+        <div class="site-header__actions">
+          <span class="itkaarhus-tag itkaarhus-tag--neutral site-header__edition">Edition {currentEdition.id}</span>
+          <ThemeToggle />
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap site-footer__grid">
+        <div>
+          <p class="site-footer__name">
+            {site.owner} {site.name}
+          </p>
+          <p class="site-footer__about">
+            How ITK Dev rates the technologies we build with, and why. Based on the code in our public GitHub
+            organisation and the experience of the team.
+          </p>
+          <div class="endorse">
+            <span class="endorse__label">Part of</span>
+            <img src={endorsement} alt="Aarhus Kommune" width="107" height="55" />
+          </div>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Quadrants</h2>
+          <ul>
+            {quadrants.map((q) => (
+              <li>
+                <a href={`${base}${q.id}/`}>{q.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">About</h2>
+          <ul>
+            <li>
+              <a href={`${base}about/`}>How to read the radar</a>
+            </li>
+            <li>
+              <a href={site.proposeUrl}>Propose a blip</a>
+            </li>
+            <li>
+              <a href={site.repoUrl}>Source on GitHub</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap site-footer__bottom">
+        <span>ITK Aarhus · Edition {currentEdition.id}</span>
+        <a href={`https://github.com/${site.org}`}>github.com/{site.org}</a>
+      </div>
+    </footer>
+  </body>
+</html>

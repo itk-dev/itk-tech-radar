@@ -1,0 +1,14 @@
+---
+import type { RingId } from '../data/radar';
+
+interface Props {
+  number: number;
+  ring: RingId;
+}
+
+const { number, ring } = Astro.props;
+---
+
+<span class:list={['blip-number', { 'blip-number--hold': ring === 'hold' }]} aria-hidden="true">
+  {number}
+</span>

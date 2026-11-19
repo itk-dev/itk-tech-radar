@@ -1,0 +1,9 @@
+# Runs the dev server against a local checkout of the ITK Aarhus design system
+# instead of the pinned release. Used by `task design-system:local`; set
+# DESIGN_SYSTEM_DIR to point somewhere other than ../itkaarhus-design-system.
+services:
+  node:
+    environment:
+      ITKAARHUS_DS_DIR: /design-system
+    volumes:
+      - ${DESIGN_SYSTEM_DIR:-../itkaarhus-design-system}:/design-system:ro

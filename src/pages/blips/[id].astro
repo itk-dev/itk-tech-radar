@@ -1,0 +1,149 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import BlipNumber from '../../components/BlipNumber.astro';
+import Icon from '../../components/Icon.astro';
+import RingTag from '../../components/RingTag.astro';
+import { editions, getQuadrant, getRing, formatEditionDate } from '../../data/radar';
+import Layout from '../../layouts/Layout.astro';
+import { getCurrentBlips, statusLabels, type Blip } from '../../lib/blips';
+import { evidenceFor, evidenceMeta, formatDate } from '../../lib/evidence';
+
+export const getStaticPaths = (async () =>
+  (await getCurrentBlips()).map((blip) => ({ params: { id: blip.id }, props: { blip } }))) satisfies GetStaticPaths;
+
+interface Props {
+  blip: Blip;
+}
+
+const { blip } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const { Content } = await render(blip.entry);
+const { links, tags, champion, history } = blip.entry.data;
+const quadrant = getQuadrant(blip.quadrant);
+const ring = getRing(blip.ring);
+const evidence = evidenceFor(blip.id);
+// Newest edition first.
+const timeline = [...history]
+  .reverse()
+  .map((h) => ({ ...h, published: editions.find((e) => e.id === h.edition)!.published }));
+---
+
+<Layout title={blip.title} description={blip.summary} section="radar">
+  <div class="page-head">
+    <div class="wrap">
+      <nav class="itkaarhus-breadcrumb" aria-label="Breadcrumb">
+        <a href={base}>Radar</a>
+        <span class="sep" aria-hidden="true">
+          /
+        </span>
+        <a href={`${base}${quadrant.id}/`}>{quadrant.name}</a>
+        <span class="sep" aria-hidden="true">
+          /
+        </span>
+        <span class="cur" aria-current="page">
+          {blip.title}
+        </span>
+      </nav>
+      <div class="blip-head">
+        <BlipNumber number={blip.number} ring={blip.ring} />
+        <h1 class="page-head__title">{blip.title}</h1>
+      </div>
+      <div class="blip-head__meta">
+        <RingTag ring={blip.ring} />
+        {blip.status !== 'none' && blip.status !== 'unchanged' && (
+          <span class="itkaarhus-tag itkaarhus-tag--neutral">{statusLabels[blip.status]}</span>
+        )}
+        <span class="blip-head__quadrant">{quadrant.name}</span>
+      </div>
+      <p class="page-head__lede">{blip.summary}</p>
+    </div>
+  </div>
+
+  <div class="wrap blip-layout">
+    <article class="prose">
+      <Content />
+    </article>
+
+    <aside class="blip-aside">
+      <section class="aside-block">
+        <h2 class="aside-heading">{ring.name}</h2>
+        <p class="aside-text">{ring.description}</p>
+      </section>
+
+      <section class="aside-block">
+        <h2 class="aside-heading">History</h2>
+        <ol class="history">
+          {timeline.map((entry) => (
+            <li class="history__entry">
+              <div class="history__head">
+                <span class="history__edition">
+                  {entry.edition} · {formatEditionDate(entry.published)}
+                </span>
+                <RingTag ring={entry.ring} />
+              </div>
+              <p class="history__note">{entry.note}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {evidence && (
+        <section class="aside-block">
+          <h2 class="aside-heading">Usage</h2>
+          <p class="usage">
+            <span class="usage__count">{evidence.repositories.length}</span>
+            <span class="aside-text">
+              of {evidenceMeta.repositoryCount} public repositories. {evidence.rule.description}.
+            </span>
+          </p>
+          {evidence.repositories.length > 0 && (
+            <details class="usage__details">
+              <summary>
+                <Icon name="chevron-down" />
+                Show repositories
+              </summary>
+              <ul class="usage__repos">
+                {evidence.repositories.map((repo) => (
+                  <li>
+                    <a href={`https://github.com/${evidenceMeta.org}/${repo}`}>{repo}</a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+          <p class="aside-note">
+            Collected {formatDate(evidenceMeta.generatedAt)} from repositories with activity since{' '}
+            {formatDate(evidenceMeta.since)}.
+          </p>
+        </section>
+      )}
+
+      {links.length > 0 && (
+        <section class="aside-block">
+          <h2 class="aside-heading">Links</h2>
+          <ul class="link-list">
+            {links.map((link) => (
+              <li>
+                <a href={link.url}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {(tags.length > 0 || champion) && (
+        <section class="aside-block">
+          {champion && <p class="aside-text">Champion: {champion}</p>}
+          {tags.length > 0 && (
+            <ul class="tag-list" aria-label="Tags">
+              {tags.map((tag) => (
+                <li class="itkaarhus-tag itkaarhus-tag--neutral">{tag}</li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
+    </aside>
+  </div>
+</Layout>

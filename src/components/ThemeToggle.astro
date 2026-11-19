@@ -1,0 +1,48 @@
+---
+// Light / Dark / System switch. Applies <html data-theme="light|dark|auto">
+// (the design system's opt-in) and stores the choice under the design
+// system's key, `itkaarhus-theme`; the inline script in Layout.astro applies
+// it before first paint.
+import Icon from './Icon.astro';
+
+const options = [
+  { value: 'light', label: 'Light', icon: 'sun' },
+  { value: 'dark', label: 'Dark', icon: 'moon' },
+  { value: 'auto', label: 'System', icon: 'monitor' },
+] as const;
+---
+
+<form data-theme-toggle>
+  <fieldset class="segmented segmented--sm">
+    <legend class="visually-hidden">Colour theme</legend>
+    <div class="segmented__options">
+      {options.map((option) => (
+        <label class="segmented__option">
+          <input type="radio" name="theme" value={option.value} />
+          <span>
+            <Icon name={option.icon} size={14} />
+            <span class="theme-toggle__label">{option.label}</span>
+          </span>
+        </label>
+      ))}
+    </div>
+  </fieldset>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-theme-toggle]');
+  if (form) {
+    const current = document.documentElement.dataset.theme ?? 'auto';
+    const input = form.querySelector<HTMLInputElement>(`input[value="${current}"]`);
+    if (input) input.checked = true;
+    form.addEventListener('change', (event) => {
+      const theme = (event.target as HTMLInputElement).value;
+      document.documentElement.dataset.theme = theme;
+      try {
+        localStorage.setItem('itkaarhus-theme', theme);
+      } catch {
+        // Storage can be unavailable (private mode); the choice then lasts for this page only.
+      }
+    });
+  }
+</script>

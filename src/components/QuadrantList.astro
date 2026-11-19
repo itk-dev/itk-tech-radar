@@ -1,0 +1,55 @@
+---
+// One quadrant's blips, grouped by ring. Items carry data attributes that the
+// radar script uses for linked highlighting and the ring filter.
+import { getQuadrant, type QuadrantId } from '../data/radar';
+import { groupByRing, statusLabels, type Blip } from '../lib/blips';
+import BlipNumber from './BlipNumber.astro';
+
+interface Props {
+  quadrant: QuadrantId;
+  blips: Blip[];
+  /** Show each blip's summary (the quadrant pages). */
+  detailed?: boolean;
+  /** Heading level of the quadrant title; ring headings use the next level. */
+  headingLevel?: 2 | 3;
+  /** Render the quadrant title. Off on the quadrant page, where the page heading names it. */
+  showTitle?: boolean;
+}
+
+const { quadrant, blips, detailed = false, headingLevel = 2, showTitle = true } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const q = getQuadrant(quadrant);
+const QuadrantHeading = `h${headingLevel}` as 'h2' | 'h3';
+const RingHeading = `h${showTitle ? headingLevel + 1 : headingLevel}` as 'h3' | 'h4';
+const groups = groupByRing(blips.filter((b) => b.quadrant === quadrant));
+---
+
+<section class:list={['quadrant-list', { 'quadrant-list--detailed': detailed }]} data-quadrant-list>
+  {showTitle && (
+    <QuadrantHeading class="quadrant-list__title">
+      <a href={`${base}${q.id}/`}>{q.name}</a>
+    </QuadrantHeading>
+  )}
+  {groups.map(({ ring, blips: ringBlips }) => (
+    <div class="quadrant-list__group" data-ring-group={ring.id}>
+      <RingHeading class="quadrant-list__ring">{ring.name}</RingHeading>
+      <ul class="quadrant-list__items">
+        {ringBlips.map((blip) => (
+          <li class="blip-item" data-blip-item={blip.id}>
+            <a class="blip-item__link" href={`${base}blips/${blip.id}/`}>
+              <BlipNumber number={blip.number} ring={blip.ring} />
+              <span class="blip-item__title">{blip.title}</span>
+              {blip.status !== 'none' && blip.status !== 'unchanged' && (
+                <span class="itkaarhus-tag itkaarhus-tag--neutral">{statusLabels[blip.status]}</span>
+              )}
+            </a>
+            {detailed && <p class="blip-item__summary">{blip.summary}</p>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+  <p class="quadrant-list__empty" data-empty-note hidden>
+    No blips in this ring.
+  </p>
+</section>

@@ -1,0 +1,31 @@
+name: Pull request
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Content check, type and schema check, and the static build.
+      - name: Build
+        run: npm run build
+
+      # Code, styles, YAML and JSON (Markdown is checked by markdown.yaml).
+      - name: Formatting
+        run: npm run format:check

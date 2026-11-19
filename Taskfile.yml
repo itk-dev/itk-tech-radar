@@ -1,0 +1,120 @@
+version: '3'
+
+# https://taskfile.dev/usage/#env-files
+dotenv: ['.env.local', '.env']
+
+vars:
+  # https://taskfile.dev/reference/templating/
+  BASE_URL: '{{.TASK_BASE_URL | default .COMPOSE_SERVER_DOMAIN | default .COMPOSE_DOMAIN | default "itk-tech-radar.local.itkdev.dk"}}'
+  DOCKER_COMPOSE: '{{.TASK_DOCKER_COMPOSE | default "docker compose"}}'
+  # The site is served under the GitHub Pages base path, locally too.
+  SITE_URL: 'http://{{.BASE_URL}}/itk-tech-radar/'
+  # Run a one-off command in the node container. `npm install` is a no-op when
+  # node_modules already matches the lock file.
+  NODE_RUN: '{{.DOCKER_COMPOSE}} run --rm --no-deps node'
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  start:
+    desc: Start the dev server (hot reload) at the local domain
+    cmds:
+      - '{{.DOCKER_COMPOSE}} up --detach --remove-orphans'
+      - echo "Starting at {{.SITE_URL}} (first start installs dependencies; follow with 'task logs')"
+    silent: true
+
+  stop:
+    desc: Stop the dev server
+    cmds:
+      - '{{.DOCKER_COMPOSE}} down --remove-orphans'
+
+  restart:
+    desc: Restart the dev server
+    cmds:
+      - task: stop
+      - task: start
+
+  logs:
+    desc: Follow the dev server log
+    cmds:
+      - '{{.DOCKER_COMPOSE}} logs --follow node'
+
+  open:
+    desc: Open the site in the browser
+    cmds:
+      - open {{.SITE_URL}}
+    silent: true
+
+  install:
+    desc: Install dependencies from the lock file (clean install)
+    cmds:
+      - '{{.NODE_RUN}} npm ci'
+
+  build:
+    desc: Content check, type check and static build to dist/
+    cmds:
+      - "{{.NODE_RUN}} sh -c 'npm install --no-audit --no-fund && npm run build'"
+
+  check:
+    desc: Run everything CI checks (build and coding standards)
+    cmds:
+      - task: build
+      - task: coding-standards:check
+
+  content:check:
+    desc: Check blip content and usage figures (fast)
+    cmds:
+      - "{{.NODE_RUN}} sh -c 'npm install --no-audit --no-fund && npm run check:content'"
+
+  evidence:
+    desc: Refresh usage figures from GitHub (uses your `gh auth token`)
+    # The token goes through the environment so it is never printed with the command.
+    env:
+      GH_TOKEN:
+        sh: gh auth token
+    cmds:
+      - >-
+        {{.DOCKER_COMPOSE}} run --rm --no-deps --env GH_TOKEN node sh -c
+        'apk add --no-cache --quiet github-cli && npm install --no-audit --no-fund && npm run evidence'
+
+  design-system:local:
+    desc: Restart the dev server against a local design system checkout (DESIGN_SYSTEM_DIR, default ../itkaarhus-design-system)
+    cmds:
+      - '{{.DOCKER_COMPOSE}} --file docker-compose.yml --file docker-compose.design-system.yml up --detach --force-recreate node'
+      - echo "Using the local design system at {{.SITE_URL}}; 'task restart' goes back to the pinned release"
+    silent: true
+
+  coding-standards:check:
+    desc: Check all coding standards
+    cmds:
+      - task: coding-standards:markdown:check
+      - task: coding-standards:prettier:check
+
+  coding-standards:apply:
+    desc: Apply all coding standards
+    cmds:
+      - task: coding-standards:markdown:apply
+      - task: coding-standards:prettier:apply
+
+  coding-standards:markdown:check:
+    desc: Check Markdown coding standards
+    cmds:
+      - "{{.DOCKER_COMPOSE}} run --rm markdownlint markdownlint '**/*.md'"
+
+  coding-standards:markdown:apply:
+    desc: Apply Markdown coding standards
+    cmds:
+      - "{{.DOCKER_COMPOSE}} run --rm markdownlint markdownlint '**/*.md' --fix"
+
+  coding-standards:prettier:check:
+    desc: Check formatting of code, styles, YAML and JSON
+    cmds:
+      - "{{.NODE_RUN}} sh -c 'npm install --no-audit --no-fund && npm run format:check'"
+
+  coding-standards:prettier:apply:
+    desc: Format code, styles, YAML and JSON
+    cmds:
+      - "{{.NODE_RUN}} sh -c 'npm install --no-audit --no-fund && npm run format'"
