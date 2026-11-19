@@ -1,0 +1,36 @@
+---
+// Lucide icon from the design system sprite. Decorative by default; pass
+// `label` when the icon carries meaning on its own.
+import sprite from '../../vendor/itkaarhus-design-system/assets/lucide-sprite.svg?url';
+
+interface Props {
+  name:
+    | 'chevron-down'
+    | 'chevron-up'
+    | 'chevron-left'
+    | 'chevron-right'
+    | 'info'
+    | 'plus'
+    | 'check'
+    | 'x'
+    | 'search'
+    | 'sun'
+    | 'moon'
+    | 'monitor';
+  size?: number;
+  label?: string;
+}
+
+const { name, size = 16, label } = Astro.props;
+---
+
+<svg
+  class="icon"
+  width={size}
+  height={size}
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+>
+  <use href={`${sprite}#lucide-${name}`}></use>
+</svg>

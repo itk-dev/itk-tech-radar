@@ -1,0 +1,46 @@
+---
+// Explains the blip markers. Movement shapes are only listed once there is a
+// previous edition to move from.
+import { editions } from '../data/radar';
+import { statusLabels } from '../lib/blips';
+
+const showMovement = editions.length > 1;
+---
+
+<ul class="legend">
+  <li>
+    <svg class="legend__mark" viewBox="-14 -14 28 28" aria-hidden="true">
+      <circle r="10" class="legend__fill" />
+    </svg>
+    Blip, numbered as in the list
+  </li>
+  <li>
+    <svg class="legend__mark" viewBox="-14 -14 28 28" aria-hidden="true">
+      <circle r="10" class="legend__fill legend__fill--hold" />
+    </svg>
+    Blip on hold
+  </li>
+  {showMovement && (
+    <>
+      <li>
+        <svg class="legend__mark" viewBox="-14 -14 28 28" aria-hidden="true">
+          <circle r="9" class="legend__fill" />
+          <circle r="12.5" class="legend__halo" />
+        </svg>
+        {statusLabels.new}
+      </li>
+      <li>
+        <svg class="legend__mark" viewBox="-14 -14 28 28" aria-hidden="true">
+          <polygon points="0,-12 12,9 -12,9" class="legend__fill" />
+        </svg>
+        {statusLabels['moved-in']}
+      </li>
+      <li>
+        <svg class="legend__mark" viewBox="-14 -14 28 28" aria-hidden="true">
+          <polygon points="0,12 12,-9 -12,-9" class="legend__fill" />
+        </svg>
+        {statusLabels['moved-out']}
+      </li>
+    </>
+  )}
+</ul>

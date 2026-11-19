@@ -1,0 +1,101 @@
+---
+import Icon from '../components/Icon.astro';
+import Legend from '../components/Legend.astro';
+import QuadrantList from '../components/QuadrantList.astro';
+import Radar from '../components/Radar.astro';
+import { currentEdition, formatEditionDate, quadrants, rings } from '../data/radar';
+import Layout from '../layouts/Layout.astro';
+import { getCurrentBlips } from '../lib/blips';
+import { evidenceMeta, formatDate } from '../lib/evidence';
+import { placeBlips } from '../lib/radar-layout';
+
+const blips = await getCurrentBlips();
+const placed = placeBlips(blips);
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  description="How ITK Dev, the development team at ITK Aarhus, rates the technologies we build with: what we adopt, trial, assess and hold, and why."
+  section="radar"
+>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">
+        Edition {currentEdition.id} · {formatEditionDate(currentEdition.published)}
+      </p>
+      <h1 class="page-head__title">ITK Dev Tech Radar</h1>
+      <p class="page-head__lede">
+        The technologies, tools and techniques we build with at ITK Aarhus, and how strongly we recommend each one.
+        Every blip links to the reasoning behind its placement.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap radar-layout">
+    <div class="radar-layout__chart desktop-only">
+      <Radar blips={placed} />
+      <p class="visually-hidden">
+        The radar chart is visual only. The same blips are listed below, grouped by quadrant and ring.
+      </p>
+    </div>
+
+    <aside class="radar-layout__aside" aria-label="Filter and legend">
+      <form data-ring-filter>
+        <fieldset class="segmented">
+          <legend class="aside-heading">Show ring</legend>
+          <div class="segmented__options">
+            <label class="segmented__option">
+              <input type="radio" name="ring" value="all" checked />
+              <span>All</span>
+            </label>
+            {rings.map((ring) => (
+              <label class="segmented__option">
+                <input type="radio" name="ring" value={ring.id} />
+                <span>{ring.name}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </form>
+
+      <section>
+        <h2 class="aside-heading">Rings</h2>
+        <dl class="ring-definitions">
+          {rings.map((ring) => (
+            <div>
+              <dt>{ring.name}</dt>
+              <dd>{ring.description}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section class="desktop-only">
+        <h2 class="aside-heading">Legend</h2>
+        <Legend />
+      </section>
+
+      <p class="aside-note">
+        Usage figures come from {evidenceMeta.repositoryCount} public repositories in{' '}
+        <a href={`https://github.com/${evidenceMeta.org}`}>{evidenceMeta.org}</a> with activity since{' '}
+        {formatDate(evidenceMeta.since)}, collected {formatDate(evidenceMeta.generatedAt)}.
+      </p>
+      <a class="itkaarhus-link" href={`${base}about/`}>
+        How to read the radar <Icon name="chevron-right" />
+      </a>
+    </aside>
+  </div>
+
+  <section class="section section--alt" aria-labelledby="all-blips">
+    <div class="wrap">
+      <h2 id="all-blips" class="section__title">
+        All blips
+      </h2>
+      <div class="quadrant-grid">
+        {quadrants.map((q) => (
+          <QuadrantList quadrant={q.id} blips={blips} headingLevel={3} />
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

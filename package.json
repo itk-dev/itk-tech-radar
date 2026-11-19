@@ -1,0 +1,33 @@
+{
+  "name": "itk-tech-radar",
+  "type": "module",
+  "version": "2026.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "config": {
+    "designSystemVersion": "0.7.0"
+  },
+  "scripts": {
+    "sync:design-system": "node scripts/sync-design-system.mjs",
+    "predev": "npm run sync:design-system",
+    "dev": "astro dev",
+    "prebuild": "npm run sync:design-system",
+    "build": "node scripts/check-content.mjs && astro check && astro build",
+    "check:content": "node scripts/check-content.mjs",
+    "preview": "astro preview",
+    "evidence": "node scripts/evidence.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "astro": "astro"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "astro": "^7.4.13",
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^6.0.3",
+    "yaml": "^2.9.1"
+  }
+}

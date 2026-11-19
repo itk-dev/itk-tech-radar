@@ -1,0 +1,104 @@
+---
+import { quadrants, rings, type QuadrantId } from '../data/radar';
+import { BLIP_RADIUS, CENTER, RADAR_SIZE, RING_RADII, type PlacedBlip } from '../lib/radar-layout';
+
+interface Props {
+  blips: PlacedBlip[];
+  /** Crop to one quadrant (the quadrant pages). */
+  focus?: QuadrantId;
+}
+
+const { blips, focus } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const half = RADAR_SIZE / 2;
+
+const focused = focus ? quadrants.find((q) => q.id === focus)! : undefined;
+// startAngle 180 = top-left, 270 = top-right, 0 = bottom-right, 90 = bottom-left.
+const isRight = focused ? focused.startAngle === 270 || focused.startAngle === 0 : false;
+const isBottom = focused ? focused.startAngle === 0 || focused.startAngle === 90 : false;
+// Room beyond the axes so the ring labels on the horizontal axis are not cropped.
+const pad = 16;
+const viewBox = focused
+  ? `${isRight ? half - pad : 0} ${isBottom ? half - pad : 0} ${half + pad} ${half + pad}`
+  : `0 0 ${RADAR_SIZE} ${RADAR_SIZE}`;
+
+// Ring labels sit on the horizontal axis, centred in each band: on the left on
+// the full radar, on the quadrant's own side when zoomed. The layout keeps
+// blips clear of this lane.
+const labelSide = isRight ? 1 : -1;
+const ringLabels = rings.map((ring, i) => {
+  const inner = i === 0 ? 0 : RING_RADII[i - 1];
+  const mid = (inner + RING_RADII[i]) / 2;
+  return { name: ring.name, x: CENTER + labelSide * mid };
+});
+
+const quadrantLabels = quadrants.map((q) => {
+  const right = q.startAngle === 270 || q.startAngle === 0;
+  const bottom = q.startAngle === 0 || q.startAngle === 90;
+  return {
+    ...q,
+    x: right ? RADAR_SIZE - 4 : 4,
+    y: bottom ? RADAR_SIZE - 6 : 16,
+    anchor: right ? 'end' : 'start',
+  };
+});
+
+const triangle = (direction: 1 | -1) => {
+  const s = BLIP_RADIUS + 3;
+  // Pointing up (moved in, -1) or down (moved out, 1), centred on the blip.
+  return direction === -1
+    ? `0,${-s} ${s},${s * 0.75} ${-s},${s * 0.75}`
+    : `0,${s} ${s},${-s * 0.75} ${-s},${-s * 0.75}`;
+};
+---
+
+<div class="radar" data-radar>
+  <svg class="radar__svg" viewBox={viewBox} aria-hidden="true" focusable="false" data-focus={focus}>
+    {[...RING_RADII].reverse().map((r, i) => (
+      <circle class={`radar__ring radar__ring--${rings[RING_RADII.length - 1 - i].id}`} cx={CENTER} cy={CENTER} r={r} />
+    ))}
+    <line class="radar__axis" x1={CENTER} y1={CENTER - RING_RADII[3]} x2={CENTER} y2={CENTER + RING_RADII[3]} />
+    <line class="radar__axis" x1={CENTER - RING_RADII[3]} y1={CENTER} x2={CENTER + RING_RADII[3]} y2={CENTER} />
+
+    {ringLabels.map((label) => (
+      <text class="radar__ring-label" x={label.x} y={CENTER} dy="0.35em" text-anchor="middle">
+        {label.name}
+      </text>
+    ))}
+
+    {!focus &&
+      quadrantLabels.map((q) => (
+        <a href={`${base}${q.id}/`} tabindex="-1" class="radar__quadrant-link">
+          <text class="radar__quadrant-label" x={q.x} y={q.y} text-anchor={q.anchor}>
+            {q.name}
+          </text>
+        </a>
+      ))}
+
+    {blips.map((blip) => (
+      <a
+        href={`${base}blips/${blip.id}/`}
+        class={`radar__blip radar__blip--${blip.ring}`}
+        data-blip={blip.id}
+        data-ring={blip.ring}
+        data-title={blip.title}
+        tabindex="-1"
+      >
+        <g transform={`translate(${blip.x.toFixed(1)} ${blip.y.toFixed(1)})`}>
+          {blip.status === 'moved-in' && <polygon class="radar__shape" points={triangle(-1)} />}
+          {blip.status === 'moved-out' && <polygon class="radar__shape" points={triangle(1)} />}
+          {blip.status !== 'moved-in' && blip.status !== 'moved-out' && <circle class="radar__shape" r={BLIP_RADIUS} />}
+          {blip.status === 'new' && <circle class="radar__halo" r={BLIP_RADIUS + 4} />}
+          <text class="radar__number" dy="0.35em">
+            {blip.number}
+          </text>
+        </g>
+      </a>
+    ))}
+  </svg>
+  <div class="radar__tooltip" role="presentation" hidden data-radar-tooltip></div>
+</div>
+
+<script>
+  import '../scripts/radar';
+</script>

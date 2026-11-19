@@ -1,0 +1,108 @@
+---
+import Legend from '../components/Legend.astro';
+import { editions, formatEditionDate, quadrants, rings } from '../data/radar';
+import { site } from '../data/site';
+import Layout from '../layouts/Layout.astro';
+import { evidenceMeta } from '../lib/evidence';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="About"
+  description="What the ITK Dev Tech Radar is, how to read its rings and quadrants, and how to propose a change."
+  section="about"
+>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">About</p>
+      <h1 class="page-head__title">How to read the radar</h1>
+      <p class="page-head__lede">
+        The radar is ITK Dev's shared opinion of the technologies we build with. It helps us choose consistently across
+        projects, and shows newcomers and partners what to expect.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap prose-page">
+    <div class="prose">
+      <h2>What it is, and what it is not</h2>
+      <p>
+        Each technology, tool or technique on the radar is a <em>blip</em>. Its position says how strongly we recommend
+        it for new work, and every blip has a short write-up explaining why. The radar is based on our own experience
+        and on the code in our public GitHub organisation. It is not a list of everything we use: settled,
+        uncontroversial technology is left off unless it helps to say it out loud.
+      </p>
+      <p>
+        The radar is advice for choosing technology, not a rule that overrides a project's context. If a project has a
+        good reason to go another way, write that reason down, ideally as an architecture decision record in the
+        project.
+      </p>
+
+      <h2>Rings</h2>
+      <p>The closer a blip is to the centre, the more confident we are in it.</p>
+      <dl class="definition-list">
+        {rings.map((ring) => (
+          <div>
+            <dt>{ring.name}</dt>
+            <dd>{ring.description}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h2>Quadrants</h2>
+      <p>Quadrants only group blips by kind. Which quadrant a blip lands in matters much less than its ring.</p>
+      <dl class="definition-list">
+        {quadrants.map((q) => (
+          <div>
+            <dt>
+              <a href={`${base}${q.id}/`}>{q.name}</a>
+            </dt>
+            <dd>{q.description}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h2>Markers</h2>
+      <Legend />
+      {editions.length === 1 && (
+        <p>
+          This is the first edition, so there is no movement to show yet. From the next edition, new blips and blips
+          that moved between rings get their own marker.
+        </p>
+      )}
+
+      <h2>Editions</h2>
+      <p>
+        We publish a new edition each time the team has reviewed the radar together. Each blip keeps the history of its
+        placements, with a note for every edition, so you can see how our view has changed. Blips that are no longer
+        relevant are taken off the radar.
+      </p>
+      <ul>
+        {editions.map((edition) => (
+          <li>
+            Edition {edition.id}, {formatEditionDate(edition.published)}
+          </li>
+        ))}
+      </ul>
+
+      <h2>Usage figures</h2>
+      <p>
+        Each blip shows how many repositories in the{' '}
+        <a href={`https://github.com/${evidenceMeta.org}`}>{evidenceMeta.org}</a> organisation use it. A script checks
+        every public, non-archived, non-fork repository with recent activity for a signal, such as a Composer package, a
+        configuration file or a Docker image, and stores the result with the radar. Private repositories are not
+        included, so the figures show how widespread something is, not exact totals. The figures inform the placement
+        but do not decide it: something can be widely used and still on hold.
+      </p>
+
+      <h2>Propose a change</h2>
+      <p>
+        Anyone at ITK can propose a new blip or argue for moving one. <a href={site.proposeUrl}>Open a proposal</a> on
+        GitHub with the technology, the ring you suggest and your reasoning. Proposals are discussed at the next radar
+        review. Changes to the write-ups themselves are made as pull requests to{' '}
+        <a href={site.repoUrl}>the radar repository</a>.
+      </p>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,13 @@
+---
+import { getRing, type RingId } from '../data/radar';
+
+interface Props {
+  ring: RingId;
+}
+
+const { ring } = Astro.props;
+---
+
+<span class:list={['itkaarhus-tag', ring === 'hold' ? 'itkaarhus-tag--neutral' : 'itkaarhus-tag--primary']}>
+  {getRing(ring).name}
+</span>

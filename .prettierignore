@@ -1,0 +1,13 @@
+# Generated or downloaded
+dist/
+.astro/
+vendor/
+node_modules/
+package-lock.json
+src/data/evidence.json
+
+# Markdown is linted by markdownlint (`task coding-standards:markdown:check`).
+*.md
+
+# Copied verbatim from devops_itkdev-docker; keep them identical to upstream.
+.markdownlint.jsonc

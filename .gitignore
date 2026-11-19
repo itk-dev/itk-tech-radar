@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs
+*.log
+
+# Astro / Node
+node_modules/
+dist/
+.astro/
+
+# Local overrides of .env (Taskfile and Docker Compose read both)
+.env.local
+
+# Design system payload fetched by scripts/sync-design-system.mjs
+vendor/
