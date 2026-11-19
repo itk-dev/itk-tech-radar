@@ -1,7 +1,7 @@
 {
   "name": "itk-tech-radar",
   "type": "module",
-  "version": "2026.1.0",
+  "version": "0.0.0",
   "private": true,
   "engines": {
     "node": ">=22.12.0"

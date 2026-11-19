@@ -92,18 +92,29 @@ positions are computed deterministically, so there is nothing to place by hand.
 3. Refresh the usage figures with `task evidence` and commit the result.
 4. Merge to `main` through a pull request, with the edition in
    `CHANGELOG.md`.
-5. Tag the edition and push the tag. This triggers the deploy:
+5. Release it (below). A new edition is a minor release.
+
+## Releasing
+
+Releases use bare semver tags (`1.0.0`, no `v`), as in our other repositories.
+The edition id (`2026.1`) is part of the content and is separate from the
+release version. Minor releases ship a new edition or new features; patch
+releases fix content or code within an edition.
+
+1. On a `release/<version>` branch from `main`, roll `CHANGELOG.md`
+   `[Unreleased]` into `[<version>] - <date>`, set `version` in `package.json`,
+   and open a pull request (`chore: release <version>`).
+2. After it is merged, tag `main` and push the tag. This triggers the deploy:
 
    ```sh
-   git tag 2027.1
-   git push origin 2027.1
+   git checkout main && git pull --ff-only
+   git tag 1.0.0
+   git push origin 1.0.0
    ```
-
-   Fixes within an edition use a patch tag, e.g. `2027.1.1`.
 
 Merging to `main` does not deploy. The `github-pages` environment must allow
 tag deployments: under **Settings → Environments → github-pages → Deployment
-branches and tags**, add a tag rule matching `20*`. Without it, the tagged
+branches and tags**, add a tag rule matching `*.*.*`. Without it, the tagged
 deploy is rejected.
 
 ## Usage figures

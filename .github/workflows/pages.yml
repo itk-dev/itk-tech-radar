@@ -2,10 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    # An edition is published by pushing its tag (e.g. 2026.1, or 2026.1.1 for a
-    # fix within the edition). Merges to main do NOT deploy.
+    # A release is shipped by pushing a bare-semver tag (e.g. 1.0.0).
+    # Merges to main do NOT deploy — main accumulates work until a tag is cut.
     tags:
-      - "20[0-9][0-9].[0-9]*"
+      - "[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
 
 permissions:

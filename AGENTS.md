@@ -87,8 +87,8 @@ Leave the file. Do not add a `history` entry for the new edition.
    edition (same or new ring) with a note. Blips without one drop off.
 3. Add new blips; `task evidence`; `task check`.
 4. `CHANGELOG.md`: describe the edition under `[Unreleased]`.
-5. Open a pull request. Publishing is a tag push after merge (`git tag YYYY.N`),
-   which only a human does.
+5. Open a pull request. Publishing is a semver release (a new edition is a
+   minor release; see "Releasing" in `README.md`), which only a human does.
 
 ### Upgrade the design system
 
